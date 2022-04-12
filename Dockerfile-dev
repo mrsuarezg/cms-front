@@ -1,0 +1,19 @@
+FROM node:14-slim
+
+RUN apt-get update && apt-get install -y curl
+
+# make the 'app' folder the current working directory
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+
+WORKDIR /home/node/app
+
+COPY . ./
+
+RUN npm install
+
+EXPOSE 3000
+
+ENV NUXT_HOST=0.0.0.0
+ENV NUXT_PORT=3000
+
+CMD [ "npm", "run", "dev" ]
